@@ -3,14 +3,16 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import { connectDB } from './config/db.js'
+import productRoutes from "./routes/productroute.js"
+
 dotenv.config()
 const app = express()
-app.get("/products", (req, res) => {
-    res.send("Server is ready")
-console.log(process.env.MONGO_URL)
-})
-app.listen(5000, () => {
+const PORT =process.env.PORT || 5000
+app.use(express.json())//allow us to access json data in the req.body
+app.use('/api/products', productRoutes)
+
+
+app.listen(PORT, () => {
     connectDB()
-    console.log("Server started successfully at http://localhost:5000")
+    console.log("Server started successfully at http://localhost:" + PORT)
 })
-// F626gJSTqrXeJ50e
